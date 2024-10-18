@@ -106,6 +106,9 @@ int main() {
             case 5:
                 ringbuffer_size(ring_buffer, head, tail);
                 break;
+            case 6:
+                cout << "THANK YOU!!!\n";
+                break;
             default:
                 cout << "PLEASE ENTER A VALID OPTION\n";
         }

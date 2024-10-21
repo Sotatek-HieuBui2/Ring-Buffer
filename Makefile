@@ -1,19 +1,20 @@
-inc_gtest := C:\msys64\usr\include\gtest
-lib_gtest := C:\msys64\usr\lib
-
 static:
-	ar rcs lib/static/libringbuffer.a obj/ringbuffer.o
+        ar rcs lib/static/libringbuffer.a obj/ringbuffer.o
 link:
-	gcc obj/main.o -Llib/static -lringbuffer -o bin/app
+        gcc obj/main.o -Llib/static -lringbuffer -o bin/app
+        gcc obj/test.o -Llib -lcmocka -Linclude -Llib/static -lringbuffer -o bin/test
 build:
-	gcc -c main.c -o obj/main.o -I./inc
-	gcc -c src/ringbuffer.c -o obj/ringbuffer.o -I./inc
+        gcc -c test.c -o obj/test.o -I./include -I./inc
+        gcc -c main.c -o obj/main.o -I./inc
+        gcc -c src/ringbuffer.c -o obj/ringbuffer.o -I./inc
+run:
+        ./bin/test
 clean:
-	rm -rf obj/* bin/*
-	rm -f gtest
+        rm -rf obj/* bin/*
+        rm -f gtest
 gtest:
-	gcc -I${inc_gtest} -c gtest.cpp -o obj/gtest.o
-	gcc obj/gtest.o -L${lib_gtest} -lgtest.dll -o bin/gtest
+        gcc -I${inc_gtest} -c gtest.cpp -o obj/gtest.o
+        gcc obj/gtest.o -L${lib_gtest} -lgtest.dll -o bin/gtest
 
 PHONY: test install
 

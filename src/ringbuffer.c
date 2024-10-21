@@ -1,16 +1,20 @@
 #include <stdio.h>
-#include <stdbool.h>
 #include "ringbuffer.h"
 
-void ringBuffer_init(RingBuffer *buffer, int x) {
+void RingBufferInit(RingBuffer *buffer, int x) {
+    if( x > MAX_SIZE && buffer == NULL ){
+        printf("Vui long nhap dam bao da khoi tao buffer\n") ;
+        printf("Vui long nhap size nho hon hoac bang 50\n") ;
+    }else{
     buffer->head = 0;
     buffer->tail = 0;
     buffer->count = 0;
     buffer->size = x;
+    }
 }
 
 // Kiểm tra buffer có rỗng không
-int ringBuffer_isEmpty(RingBuffer *buffer) {
+int RingBufferIsEmpty(RingBuffer *buffer) {
     if(buffer->count == 0){
         //printf("buffer is empty\n");
         return 1;
@@ -21,7 +25,7 @@ int ringBuffer_isEmpty(RingBuffer *buffer) {
 }
 
 // Kiểm tra buffer có đầy không
-int ringBuffer_isFull(RingBuffer *buffer) {
+int RingBufferIsFull(RingBuffer *buffer) {
     if(buffer->count == buffer->size){
         //printf("buffer is full\n");
         return 1;
@@ -32,33 +36,33 @@ int ringBuffer_isFull(RingBuffer *buffer) {
 }
 
 // Thêm phần tử vào buffer
-int ringBuffer_enqueue(RingBuffer *buffer, int value) {
+int RingBufferEnqueue(RingBuffer *buffer, int value) {
     if (buffer->count == buffer->size) {
         printf("buffer day, khong the them %d\n", value);
         return -1;
     }else{
     buffer->data[buffer->tail] = value;
-    buffer->tail = (buffer->tail + 1) % BUFFER_SIZE;
+    buffer->tail = (buffer->tail + 1) % buffer->size;
     buffer->count++;
     return 0;
 }
 }
 
 // Lấy phần tử ra khỏi buffer
-int ringBuffer_dequeue(RingBuffer *buffer, int *value) {
+int RingBufferDequeue(RingBuffer *buffer, int *value) {
     if (buffer->count == 0) {
         printf("buffer rong, khong the lay phan tu\n");
         return -1;
     }else{
     *value = buffer->data[buffer->head];
-    buffer->head = (buffer->head + 1) % BUFFER_SIZE;
+    buffer->head = (buffer->head + 1) % buffer->size;
     buffer->count--;
     return 0;
 }
 }
 
 // In trạng thái của buffer
-int ringBuffer_print(RingBuffer *buffer) {
+int RingBufferPrint(RingBuffer *buffer) {
     int d = buffer->count;
     printf("Size of Buffer: %d\n", d);
 }

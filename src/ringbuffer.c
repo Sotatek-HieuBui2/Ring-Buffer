@@ -1,10 +1,11 @@
 #include <stdio.h>
+#include <math.h>
 #include "ringbuffer.h"
 
 void RingBufferInit(RingBuffer *buffer, int x) {
-    if( x > MAX_SIZE && buffer == NULL ){
+    if(x < 0 || x > BUFFER_SIZE || buffer == NULL ){
         printf("Vui long nhap dam bao da khoi tao buffer\n") ;
-        printf("Vui long nhap size nho hon hoac bang 50\n") ;
+        printf("Vui long nhap 0 < size <= 50\n") ;
     }else{
     buffer->head = 0;
     buffer->tail = 0;
@@ -37,7 +38,9 @@ int RingBufferIsFull(RingBuffer *buffer) {
 
 // Thêm phần tử vào buffer
 int RingBufferEnqueue(RingBuffer *buffer, int value) {
-    if (buffer->count == buffer->size) {
+    if( value < -pow(2,8) - 1 || value > pow(2,8)){                  //kiem tra gia tri hop le cua value
+	printf("vui long nhap gia tri tu -2^8 - 1 den 2^8");
+    }else if (buffer->count == buffer->size) {                      // kiem tra buffer day
         printf("buffer day, khong the them %d\n", value);
         return -1;
     }else{
@@ -45,12 +48,12 @@ int RingBufferEnqueue(RingBuffer *buffer, int value) {
     buffer->tail = (buffer->tail + 1) % buffer->size;
     buffer->count++;
     return 0;
-}
+    }
 }
 
 // Lấy phần tử ra khỏi buffer
 int RingBufferDequeue(RingBuffer *buffer, int *value) {
-    if (buffer->count == 0) {
+    if (buffer->count == 0) {                                   // kiem tra buffer rong
         printf("buffer rong, khong the lay phan tu\n");
         return -1;
     }else{
@@ -61,8 +64,8 @@ int RingBufferDequeue(RingBuffer *buffer, int *value) {
 }
 }
 
-// In trạng thái của buffer
-int RingBufferPrint(RingBuffer *buffer) {
+// In kich thuoc của buffer
+int RingBufferSize(RingBuffer *buffer) {
     int d = buffer->count;
     printf("Size of Buffer: %d\n", d);
 }

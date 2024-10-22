@@ -12,10 +12,10 @@ typedef struct {
     int size;
 } RingBuffer;
 
-void ringBuffer_init(RingBuffer *buffer, int x);
-int ringBuffer_isEmpty(RingBuffer *buffer);
-int ringBuffer_isFull(RingBuffer *buffer);
-int ringBuffer_enqueue(RingBuffer *buffer, int value);
-int ringBuffer_dequeue(RingBuffer *buffer, int *value);
-int ringBuffer_print(RingBuffer *buffer);
+void RingBufferInit(RingBuffer *buffer, int x);
+int RingBufferIsEmpty(RingBuffer *buffer);
+int RingBufferIsFulll(RingBuffer *buffer);
+int RingBufferEnqueue(RingBuffer *buffer, int value);
+int RingBufferDequeue(RingBuffer *buffer, int *value);
+int RingBufferSize(RingBuffer *buffer);
 #endif

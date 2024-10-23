@@ -4,8 +4,9 @@
 
 void RingBufferInit(RingBuffer *buffer, int x) {
     if(x < 0 || x > BUFFER_SIZE || buffer == NULL ){
+   	buffer->size = 0;
         printf("Vui long nhap dam bao da khoi tao buffer\n") ;
-        printf("Vui long nhap 0 < size <= 50\n") ;
+        printf("va nhap 0 < size <= 50\n") ;
     }else{
     buffer->head = 0;
     buffer->tail = 0;
@@ -32,7 +33,7 @@ int RingBufferIsFull(RingBuffer *buffer) {
         return 1;
     }else {
         printf("buffer is not full\n");
-        //return 0;
+        return 0;
     }
 }
 
@@ -68,4 +69,5 @@ int RingBufferDequeue(RingBuffer *buffer, int *value) {
 int RingBufferSize(RingBuffer *buffer) {
     int d = buffer->count;
     printf("Size of Buffer: %d\n", d);
+    return d;
 }

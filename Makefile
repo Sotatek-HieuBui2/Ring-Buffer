@@ -1,20 +1,21 @@
 static:
-        ar rcs lib/static/libringbuffer.a obj/ringbuffer.o
+	ar rcs lib/static/libringbuffer.a obj/ringbuffer.o
 link:
-        gcc obj/main.o -Llib/static -lringbuffer -o bin/app
-        gcc obj/test.o -Llib -lcmocka -Linclude -Llib/static -lringbuffer -o bin/test
+	gcc -fprofile-arcs -ftest-coverage obj/test.o -Llib -lcmocka -Linclude -Llib/static -lringbuffer -o bin/test
 build:
-        gcc -c test.c -o obj/test.o -I./include -I./inc
-        gcc -c main.c -o obj/main.o -I./inc
-        gcc -c src/ringbuffer.c -o obj/ringbuffer.o -I./inc
+	gcc -c -fprofile-arcs -ftest-coverage test.c -o obj/test.o -I./include -I./inc
+	gcc -c src/ringbuffer.c -o obj/ringbuffer.o -I./inc
 run:
-        ./bin/test
+	./bin/test
+rmlib:
+	rm  -f lib/static/*
+lcov:
+	lcov -c -d ./obj -o cov.info
+	genhtml cov.info -o cov
+watch:
+	firefox ./cov/index.html
 clean:
-        rm -rf obj/* bin/*
-        rm -f gtest
-gtest:
-        gcc -I${inc_gtest} -c gtest.cpp -o obj/gtest.o
-        gcc obj/gtest.o -L${lib_gtest} -lgtest.dll -o bin/gtest
+	rm -rf obj/* bin/* lib/static/*
 
 PHONY: test install
 

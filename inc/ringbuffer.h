@@ -14,7 +14,7 @@ typedef struct {
 
 void RingBufferInit(RingBuffer *buffer, int x);
 int RingBufferIsEmpty(RingBuffer *buffer);
-int RingBufferIsFulll(RingBuffer *buffer);
+int RingBufferIsFull(RingBuffer *buffer);
 int RingBufferEnqueue(RingBuffer *buffer, int value);
 int RingBufferDequeue(RingBuffer *buffer, int *value);
 int RingBufferSize(RingBuffer *buffer);
